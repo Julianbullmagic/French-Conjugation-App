@@ -59,55 +59,55 @@ const sentenceEnEl       = document.getElementById('prompt-sentence-en');
 
 // ===== TIPS =====
 const TIPS = {
-    'indicative.present':            "Indicative Present: Used for factual statements, beliefs, and habits. (e.g., 'I speak', 'I am speaking')",
-    'indicative.preterite':          "Pretérito: The 'Zoom Lens'. Used for completed actions with a specific timeframe. (e.g., 'Yesterday I bought bread' — Ayer compré pan).",
-    'indicative.imperfect':          "Imperfecto: The 'Wide-Angle Lens'. Used for descriptions, background context, or past habits. (e.g., 'I used to play', 'The sky was blue').",
-    'indicative.future':             "Future: Used for actions that will happen. (e.g., 'I will speak').",
-    'indicative.conditional':        "Conditional: Used for hypotheticals. (e.g., 'I would speak' if I could).",
-    'indicative.present_perfect':    "Present Perfect: 'I have spoken'. Actions that started in the past and are still relevant now.",
-    'indicative.past_perfect':       "Past Perfect (Pluscuamperfecto): 'I had spoken'. An action that happened before another past action.",
-    'indicative.future_perfect':     "Future Perfect: 'I will have spoken'. An action completed by a certain future time.",
-    'indicative.conditional_perfect':"Conditional Perfect: 'I would have spoken'. A hypothetical past action.",
-    'subjunctive.present':           "Subjunctive Present: Wishes, doubts, emotions. (e.g., 'I hope that you speak').",
-    'subjunctive.imperfect':         "Subjunctive Imperfect: Past wishes/doubts. (e.g., 'If I were you...', 'I wanted you to speak').",
-    'subjunctive.present_perfect':   "Subjunctive Present Perfect: 'I hope that you have spoken'.",
-    'imperative.positive':           "Imperative (Positive): Commands! (e.g., '¡Habla!' — Speak!).",
-    'imperative.negative':           "Imperative (Negative): Prohibitions. (e.g., '¡No hables!' — Don't speak!).",
-    'non_finite.infinitive':         "Infinitive: The base form. (e.g., 'To speak' — hablar).",
-    'non_finite.gerund':             "Gerund: Ongoing action / present participle. (e.g., 'Speaking' — Hablando).",
-    'non_finite.past_participle':    "Past Participle: Used in compound tenses. (e.g., 'Spoken' — Hablado).",
-    'grammar.possessive_unstressed': "Possessive Adj. (Unstressed/Átonos): Come BEFORE the noun. mi/tu/su agree only in number; nuestro/vuestro also agree in gender.",
-    'grammar.possessive_stressed':   "Possessive Adj. (Stressed/Tónicos): Come AFTER the noun or stand alone. Agree in BOTH gender and number with the noun.",
-    'grammar.demonstrative':         "Demonstrative Adj.: agree in gender & number. este/a = this (near), ese/a = that (there), aquel/aquella = that (far over there).",
-    'grammar.direct_object':         "Direct Object Pronouns: me, te, lo/la, nos, os, los/las. Go BEFORE the verb. Replace the noun receiving the action directly.",
-    'grammar.indirect_object':       "Indirect Object Pronouns: me, te, le, nos, os, les. Go BEFORE the verb. Show to/for whom the action is done.",
-    'grammar.reflexive':             "Reflexive Pronouns: me, te, se, nos, os, se. Used when the subject acts on itself (e.g., lavarse = to wash oneself).",
+    'indicative.present':            "Présent : Pour les faits, habitudes et états actuels. Ex. : 'Je parle français' (I speak French).",
+    'indicative.preterite':          "Passé composé : Pour les actions passées et terminées. Auxiliaire avoir ou être + participe passé. Ex. : 'J'ai parlé' (I spoke).",
+    'indicative.imperfect':          "Imparfait : Pour les descriptions, habitudes passées et actions continues dans le passé. Ex. : 'Je parlais' (I used to speak / I was speaking).",
+    'indicative.future':             "Futur simple : Pour les actions à venir. Infinitif + terminaisons. Ex. : 'Je parlerai' (I will speak).",
+    'indicative.conditional':        "Conditionnel présent : Pour les hypothèses et situations conditionnelles. Ex. : 'Je parlerais' (I would speak).",
+    'indicative.present_perfect':    "Passé récent : Venir de + infinitif. Une action qui vient de se passer. Ex. : 'Je viens de parler' (I have just spoken).",
+    'indicative.past_perfect':       "Plus-que-parfait : Avoir/être (imparfait) + participe passé. Une action antérieure à une autre dans le passé. Ex. : 'J'avais parlé' (I had spoken).",
+    'indicative.future_perfect':     "Futur antérieur : Avoir/être (futur) + participe passé. Une action qui sera terminée avant un moment futur. Ex. : 'J'aurai parlé' (I will have spoken).",
+    'indicative.conditional_perfect':"Conditionnel passé : Avoir/être (conditionnel) + participe passé. Pour les regrets ou hypothèses irréelles. Ex. : 'J'aurais parlé' (I would have spoken).",
+    'subjunctive.present':           "Subjonctif présent : Exprime les désirs, doutes et émotions. Après 'il faut que', 'je veux que', etc. Ex. : 'Il faut que je parle' (I must speak).",
+    'subjunctive.imperfect':         "Subjonctif imparfait : Rare à l'oral, surtout à l'écrit littéraire. Pour les désirs/doutes dans le passé.",
+    'subjunctive.present_perfect':   "Subjonctif passé : Avoir/être (subjonctif) + participe passé. Ex. : 'Je doute qu'il ait parlé' (I doubt that he spoke).",
+    'imperative.positive':           "Impératif affirmatif : 3 formes seulement (tu, nous, vous). Les verbes en -er perdent le -s final à la forme tu. Ex. : 'Parle !' (Speak!).",
+    'imperative.negative':           "Impératif négatif : ne + verbe + pas. Identique au subjonctif présent. Ex. : 'Ne parle pas !' (Don't speak!).",
+    'non_finite.infinitive':         "Infinitif : La forme de base du verbe (parler, finir, prendre…). Utilisé après des verbes conjugués et des prépositions.",
+    'non_finite.gerund':             "Participe présent : Radical de nous + -ant (parlant, finissant). Utilisé avec 'en' pour le gérondif : 'en parlant' (while speaking).",
+    'non_finite.past_participle':    "Participe passé : Utilisé dans les temps composés. -er → -é (parlé), -ir finir type → -i (fini). Formes irrégulières : fait, été, pris…",
+    'grammar.possessive_unstressed': "Adjectifs possessifs : Précèdent le nom. mon/ma/mes, ton/ta/tes, son/sa/ses, notre/nos, votre/vos, leur/leurs. Attention : mon/ton/son devant féminin commençant par voyelle.",
+    'grammar.possessive_stressed':   "Pronoms possessifs : Remplacent le nom. le mien/la mienne, le tien/la tienne, le sien/la sienne, le nôtre/la nôtre, le vôtre/la vôtre, le leur/la leur.",
+    'grammar.demonstrative':         "Adjectifs démonstratifs : ce (m.sg), cet (m.sg devant voyelle/h), cette (f.sg), ces (pl.). Ex. : ce livre, cet arbre, cette maison, ces amis.",
+    'grammar.direct_object':         "Pronoms COD : me, te, le/la, nous, vous, les. Se placent avant le verbe conjugué. Ex. : 'Je le vois' (I see him/it).",
+    'grammar.indirect_object':       "Pronoms COI : me, te, lui, nous, vous, leur. Se placent avant le verbe conjugué. Ex. : 'Je lui parle' (I speak to him/her).",
+    'grammar.reflexive':             "Pronoms réfléchis : me, te, se, nous, vous, se. Le sujet agit sur lui-même. Ex. : 'Je me lève' (I get up).",
 };
 
 const TENSE_NAMES = {
-    'indicative.present':            'Indicative Present',
-    'indicative.preterite':          'Preterite',
-    'indicative.imperfect':          'Imperfect',
-    'indicative.future':             'Future',
-    'indicative.conditional':        'Conditional',
-    'indicative.present_perfect':    'Present Perfect',
-    'indicative.past_perfect':       'Past Perfect',
-    'indicative.future_perfect':     'Future Perfect',
-    'indicative.conditional_perfect':'Conditional Perfect',
-    'subjunctive.present':           'Subjunctive Present',
-    'subjunctive.imperfect':         'Subjunctive Imperfect',
-    'subjunctive.present_perfect':   'Subjunctive Pres. Perfect',
-    'imperative.positive':           'Imperative (Positive)',
-    'imperative.negative':           'Imperative (Negative)',
-    'non_finite.infinitive':         'Infinitive',
-    'non_finite.gerund':             'Gerund',
-    'non_finite.past_participle':    'Past Participle',
-    'grammar.possessive_unstressed': 'Possessive Adj. (Unstressed)',
-    'grammar.possessive_stressed':   'Possessive Adj. (Stressed)',
-    'grammar.demonstrative':         'Demonstrative Adj.',
-    'grammar.direct_object':         'Direct Object Pronouns',
-    'grammar.indirect_object':       'Indirect Object Pronouns',
-    'grammar.reflexive':             'Reflexive Pronouns',
+    'indicative.present':            'Présent',
+    'indicative.preterite':          'Passé composé',
+    'indicative.imperfect':          'Imparfait',
+    'indicative.future':             'Futur simple',
+    'indicative.conditional':        'Conditionnel présent',
+    'indicative.present_perfect':    'Passé récent',
+    'indicative.past_perfect':       'Plus-que-parfait',
+    'indicative.future_perfect':     'Futur antérieur',
+    'indicative.conditional_perfect':'Conditionnel passé',
+    'subjunctive.present':           'Subjonctif présent',
+    'subjunctive.imperfect':         'Subjonctif imparfait',
+    'subjunctive.present_perfect':   'Subjonctif passé',
+    'imperative.positive':           'Impératif affirmatif',
+    'imperative.negative':           'Impératif négatif',
+    'non_finite.infinitive':         'Infinitif',
+    'non_finite.gerund':             'Participe présent',
+    'non_finite.past_participle':    'Participe passé',
+    'grammar.possessive_unstressed': 'Adjectifs possessifs',
+    'grammar.possessive_stressed':   'Pronoms possessifs',
+    'grammar.demonstrative':         'Adjectifs démonstratifs',
+    'grammar.direct_object':         'Pronoms COD',
+    'grammar.indirect_object':       'Pronoms COI',
+    'grammar.reflexive':             'Pronoms réfléchis',
 };
 
 // ===== INIT =====
@@ -416,7 +416,7 @@ function generateNextNewQuestion() {
     const q = getNextQuestion();
     if (!q) {
         pronounEl.textContent = '';
-        verbEl.textContent = selectedTopics.size === 0 ? 'Select a topic in Filters' : '¡Felicidades!';
+        verbEl.textContent = selectedTopics.size === 0 ? 'Select a topic in Filters' : 'Félicitations !';
         translationEl.textContent = selectedTopics.size === 0
             ? 'Open the Filters panel above to get started.'
             : 'You have mastered all selected questions!';
@@ -500,7 +500,7 @@ function loadHistoryEntry(index) {
         if (entry.mood === 'imperative') {
             pronounEl.textContent = PRONOUNS.imperative[entry.pronounIndex];
         } else if (entry.mood === 'non_finite') {
-            pronounEl.textContent = 'Forma No Personal';
+            pronounEl.textContent = 'Forme non personnelle';
         } else {
             pronounEl.textContent = PRONOUNS.standard[entry.pronounIndex];
         }
@@ -556,10 +556,10 @@ function loadHistoryEntry(index) {
 
         if (entry.wasCorrect) {
             feedbackEl.className = 'feedback correct';
-            feedbackMsgEl.innerHTML = entry.masteredMsg || '<strong>¡Muy bien!</strong>';
+            feedbackMsgEl.innerHTML = entry.masteredMsg || '<strong>Très bien !</strong>';
         } else {
             feedbackEl.className = 'feedback incorrect';
-            feedbackMsgEl.innerHTML = '<strong>Incorrecto.</strong>';
+            feedbackMsgEl.innerHTML = '<strong>Incorrect.</strong>';
             correctAnswerDisplayEl.classList.remove('hidden');
             correctTextEl.textContent = getCorrectAnswer(entry);
         }
@@ -627,7 +627,7 @@ function checkAnswer() {
             streakEl.textContent = streak;
             inputEl.classList.add('success');
             feedbackEl.className = 'feedback correct';
-            const masteredMsg = '<strong>¡Excelente!</strong> Mastered — correct 3 times!';
+            const masteredMsg = '<strong>Excellent !</strong> Maîtrisé — correct 3 fois !';
             feedbackMsgEl.innerHTML = masteredMsg;
             entry.masteredMsg = masteredMsg;
         } else {
@@ -646,7 +646,7 @@ function handleCorrect() {
     streakEl.textContent = streak;
     inputEl.classList.add('success');
     feedbackEl.className = 'feedback correct';
-    feedbackMsgEl.innerHTML = '<strong>¡Muy bien!</strong>';
+    feedbackMsgEl.innerHTML = '<strong>Très bien !</strong>';
 }
 
 function handleIncorrect(answer) {
