@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Conjugation Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1>Spanish Verbs</h1>
+            <div class="stats">
+                <span>Streak: <b id="streak-counter">0</b></span>
+            </div>
+        </header>
+
+        <!-- Irregular-only mode toggle -->
+        <div class="mode-bar">
+            <label class="irregular-only-label" for="irregular-only-toggle">
+                <div class="toggle-switch">
+                    <input type="checkbox" id="irregular-only-toggle">
+                    <span class="toggle-slider"></span>
+                </div>
+                <span class="toggle-text">Irregular conjugations only</span>
+            </label>
+            <span id="irregular-pool-size" class="irregular-pool-size hidden"></span>
+        </div>
+
+        <!-- Collapsible Filter Panel -->
+        <div class="filter-panel">
+            <button class="filter-toggle-btn" id="filter-toggle-btn">
+                <span class="filter-toggle-icon" id="filter-toggle-icon">▶</span>
+                <span>Filters</span>
+                <span class="filter-summary" id="filter-summary"></span>
+            </button>
+            <div class="filter-body hidden" id="filter-body">
+                <div class="filter-columns">
+                    <div class="filter-col">
+                        <div class="filter-col-header">
+                            <span class="filter-col-title">Topics</span>
+                            <div class="filter-col-actions">
+                                <button class="filter-action-btn" id="topics-all-btn">All</button>
+                                <button class="filter-action-btn" id="topics-none-btn">None</button>
+                            </div>
+                        </div>
+                        <div class="filter-list" id="topic-list"></div>
+                    </div>
+                    <div class="filter-col">
+                        <div class="filter-col-header">
+                            <span class="filter-col-title">Verbs</span>
+                            <div class="filter-col-actions">
+                                <button class="filter-action-btn" id="verbs-all-btn">All</button>
+                                <button class="filter-action-btn" id="verbs-none-btn">None</button>
+                                <button class="filter-action-btn" id="verbs-irregular-btn">Irregular</button>
+                            </div>
+                        </div>
+                        <p class="verb-filter-note" id="verb-filter-note">No verbs checked = all verbs used</p>
+                        <div class="filter-list" id="verb-list"></div>
+                    </div>
+                </div>
+                <div class="filter-apply-row">
+                    <button class="filter-apply-btn" id="apply-filters-btn">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+
+        <main class="card">
+            <div class="prompt">
+                <p id="random-tense-label" class="tense-label hidden"></p>
+                <p class="pronoun" id="prompt-pronoun">...</p>
+                <h2 class="verb" id="prompt-verb">...</h2>
+                <p class="translation" id="prompt-translation">...</p>
+                <p id="prompt-sentence" class="sentence hidden"></p>
+                <p id="prompt-sentence-en" class="sentence-translation hidden"></p>
+            </div>
+
+            <button id="sentence-mode-btn" class="mode-btn hidden">Use in Sentence</button>
+
+            <div class="rule-section" id="rule-section">
+                <button class="rule-toggle-btn" id="rule-toggle-btn">
+                    <span class="rule-toggle-icon" id="rule-toggle-icon">▶</span>
+                    <span>Conjugation Rules & Exceptions</span>
+                </button>
+                <div class="rule-body hidden" id="rule-body">
+                    <div class="rule-block">
+                        <h4 class="rule-heading">General Rule</h4>
+                        <div id="rule-content" class="rule-content"></div>
+                    </div>
+                    <div class="rule-block">
+                        <h4 class="rule-heading">Common Exceptions</h4>
+                        <div id="rule-exceptions" class="rule-content"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <input type="text" id="answer-input" placeholder="Type your answer here..." autocomplete="off">
+
+                <div class="virtual-keyboard">
+                    <button type="button" data-char="á">á</button>
+                    <button type="button" data-char="é">é</button>
+                    <button type="button" data-char="í">í</button>
+                    <button type="button" data-char="ó">ó</button>
+                    <button type="button" data-char="ú">ú</button>
+                    <button type="button" data-char="ñ">ñ</button>
+                </div>
+            </div>
+
+            <button id="check-btn" class="primary-btn">Check Answer</button>
+
+            <div class="action-row">
+                <button id="back-btn" class="secondary-btn hidden">← Back</button>
+                <button id="next-btn" class="secondary-btn hidden">Next →</button>
+            </div>
+
+            <div id="feedback" class="feedback hidden">
+                <p id="feedback-msg"></p>
+                <p id="correct-answer-display" class="hidden">Correct: <span id="correct-text"></span></p>
+            </div>
+
+            <button id="show-conjugations-btn" class="info-btn hidden">Show All Forms</button>
+
+            <div id="conjugation-table-container" class="hidden">
+                <h3 id="conjugation-table-title" class="conjugation-table-title"></h3>
+                <table id="conjugation-table" class="conjugation-table">
+                    <thead id="conjugation-thead"></thead>
+                    <tbody id="conjugation-tbody"></tbody>
+                </table>
+            </div>
+
+            <button id="remove-btn" class="danger-btn hidden">Remove This Question</button>
+        </main>
+
+        <footer class="info-box">
+            <h3>Quick Tip:</h3>
+            <p id="tense-tip">Open Filters above to choose which tenses and verbs to practice.</p>
+        </footer>
+    </div>
+
+    <script src="grammar.js"></script>
+    <script src="verbs.js"></script>
+    <script src="sentences.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
