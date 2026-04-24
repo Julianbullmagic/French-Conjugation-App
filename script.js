@@ -250,61 +250,89 @@ function applyFilters() {
 // ===== IRREGULAR CONJUGATION DETECTION =====
 function computeRegularForm(verb, mood, tense, pronounIndex) {
     const inf = verb.infinitive;
-    const ending = inf.slice(-2); // 'ar', 'er', or 'ir'
+    const ending = inf.slice(-2); // 'er' or 'ir'
     const stem = inf.slice(0, -2);
-    const pp = stem + (ending === 'ar' ? 'ado' : 'ido');
+
+    // Detect finir-type -ir verbs by checking nous form for -issons infix
+    const isFinirType = ending === 'ir' &&
+        (verb.conjugations.indicative.present[3] || '').endsWith('issons');
+
+    // Only handle regular -er and finir-type -ir; all others return null
+    if (ending !== 'er' && !isFinirType) return null;
+
+    const pp = ending === 'er' ? stem + 'é' : stem + 'i';
+    const aux = verb.auxiliaire || 'avoir';
 
     if (mood === 'indicative') {
         if (tense === 'present') {
-            const E = { ar: ['o','as','a','amos','áis','an'], er: ['o','es','e','emos','éis','en'], ir: ['o','es','e','imos','ís','en'] };
-            return stem + E[ending][pronounIndex];
+            if (ending === 'er') return stem + ['e','es','e','ons','ez','ent'][pronounIndex];
+            return stem + ['is','is','it','issons','issez','issent'][pronounIndex];
         }
         if (tense === 'preterite') {
-            const E = { ar: ['é','aste','ó','amos','asteis','aron'], er: ['í','iste','ió','imos','isteis','ieron'], ir: ['í','iste','ió','imos','isteis','ieron'] };
-            return stem + E[ending][pronounIndex];
+            const avoir = ['ai','as','a','avons','avez','ont'];
+            const être  = ['suis','es','est','sommes','êtes','sont'];
+            return (aux === 'être' ? être : avoir)[pronounIndex] + ' ' + pp;
         }
         if (tense === 'imperfect') {
-            const E = { ar: ['aba','abas','aba','ábamos','abais','aban'], er: ['ía','ías','ía','íamos','íais','ían'], ir: ['ía','ías','ía','íamos','íais','ían'] };
-            return stem + E[ending][pronounIndex];
+            if (ending === 'er') return stem + ['ais','ais','ait','ions','iez','aient'][pronounIndex];
+            return stem + ['issais','issais','issait','issions','issiez','issaient'][pronounIndex];
         }
-        if (tense === 'future')       return inf + ['é','ás','á','emos','éis','án'][pronounIndex];
-        if (tense === 'conditional')  return inf + ['ía','ías','ía','íamos','íais','ían'][pronounIndex];
-        const haberForms = {
-            present_perfect:    ['he','has','ha','hemos','habéis','han'],
-            past_perfect:       ['había','habías','había','habíamos','habíais','habían'],
-            future_perfect:     ['habré','habrás','habrá','habremos','habréis','habrán'],
-            conditional_perfect:['habría','habrías','habría','habríamos','habríais','habrían'],
-        };
-        if (haberForms[tense]) return haberForms[tense][pronounIndex] + ' ' + pp;
+        if (tense === 'future')      return inf + ['ai','as','a','ons','ez','ont'][pronounIndex];
+        if (tense === 'conditional') return inf + ['ais','ais','ait','ions','iez','aient'][pronounIndex];
+        if (tense === 'present_perfect') {
+            const venirForms = ['viens','viens','vient','venons','venez','viennent'];
+            const de = /^[aeiouéàâêîôùûœh]/i.test(inf) ? "d'" : 'de ';
+            return venirForms[pronounIndex] + ' ' + de + inf;
+        }
+        if (tense === 'past_perfect') {
+            const avImp = ['avais','avais','avait','avions','aviez','avaient'];
+            const êtImp = ['étais','étais','était','étions','étiez','étaient'];
+            return (aux === 'être' ? êtImp : avImp)[pronounIndex] + ' ' + pp;
+        }
+        if (tense === 'future_perfect') {
+            const avFut = ['aurai','auras','aura','aurons','aurez','auront'];
+            const êtFut = ['serai','seras','sera','serons','serez','seront'];
+            return (aux === 'être' ? êtFut : avFut)[pronounIndex] + ' ' + pp;
+        }
+        if (tense === 'conditional_perfect') {
+            const avCond = ['aurais','aurais','aurait','aurions','auriez','auraient'];
+            const êtCond = ['serais','serais','serait','serions','seriez','seraient'];
+            return (aux === 'être' ? êtCond : avCond)[pronounIndex] + ' ' + pp;
+        }
     }
 
     if (mood === 'subjunctive') {
         if (tense === 'present') {
-            const E = { ar: ['e','es','e','emos','éis','en'], er: ['a','as','a','amos','áis','an'], ir: ['a','as','a','amos','áis','an'] };
-            return stem + E[ending][pronounIndex];
+            if (ending === 'er') return stem + ['e','es','e','ions','iez','ent'][pronounIndex];
+            return stem + ['isse','isses','isse','issions','issiez','issent'][pronounIndex];
         }
         if (tense === 'imperfect') {
-            const E = { ar: ['ara','aras','ara','áramos','arais','aran'], er: ['iera','ieras','iera','iéramos','ierais','ieran'], ir: ['iera','ieras','iera','iéramos','ierais','ieran'] };
-            return stem + E[ending][pronounIndex];
+            if (ending === 'er') return stem + ['asse','asses','ât','assions','assiez','assent'][pronounIndex];
+            return stem + ['isse','isses','ît','issions','issiez','issent'][pronounIndex];
         }
-        if (tense === 'present_perfect') return ['haya','hayas','haya','hayamos','hayáis','hayan'][pronounIndex] + ' ' + pp;
+        if (tense === 'present_perfect') {
+            const avoir = ['aie','aies','ait','ayons','ayez','aient'];
+            const être  = ['sois','sois','soit','soyons','soyez','soient'];
+            return (aux === 'être' ? être : avoir)[pronounIndex] + ' ' + pp;
+        }
     }
 
     if (mood === 'imperative') {
+        // French imperative: 3 forms only (tu/nous/vous), pronounIndex 0/1/2
         if (tense === 'positive') {
-            const E = { ar: [stem+'a',stem+'e',stem+'emos',stem+'ad',stem+'en'], er: [stem+'e',stem+'a',stem+'amos',stem+'ed',stem+'an'], ir: [stem+'e',stem+'a',stem+'amos',stem+'id',stem+'an'] };
-            return E[ending][pronounIndex];
+            if (ending === 'er') return [stem+'e', stem+'ons', stem+'ez'][pronounIndex];
+            return [stem+'is', stem+'issons', stem+'issez'][pronounIndex];
         }
         if (tense === 'negative') {
-            const E = { ar: ['no '+stem+'es','no '+stem+'e','no '+stem+'emos','no '+stem+'éis','no '+stem+'en'], er: ['no '+stem+'as','no '+stem+'a','no '+stem+'amos','no '+stem+'áis','no '+stem+'an'], ir: ['no '+stem+'as','no '+stem+'a','no '+stem+'amos','no '+stem+'áis','no '+stem+'an'] };
-            return E[ending][pronounIndex];
+            if (ending === 'er') return ['ne '+stem+'e pas', 'ne '+stem+'ons pas', 'ne '+stem+'ez pas'][pronounIndex];
+            return ['ne '+stem+'isse pas', 'ne '+stem+'issions pas', 'ne '+stem+'issez pas'][pronounIndex];
         }
     }
 
     if (mood === 'non_finite') {
-        if (tense === 'gerund')         return stem + (ending === 'ar' ? 'ando' : 'iendo');
+        if (tense === 'gerund')          return stem + (ending === 'er' ? 'ant' : 'issant');
         if (tense === 'past_participle') return pp;
-        // infinitive is always trivially "regular" — skip
+        // infinitive always trivially regular — skip
     }
 
     return null;
@@ -654,7 +682,7 @@ function handleIncorrect(answer) {
     streakEl.textContent = streak;
     inputEl.classList.add('error');
     feedbackEl.className = 'feedback incorrect';
-    feedbackMsgEl.innerHTML = '<strong>Incorrecto.</strong>';
+    feedbackMsgEl.innerHTML = '<strong>Incorrect.</strong>';
     correctAnswerDisplayEl.classList.remove('hidden');
     correctTextEl.textContent = answer;
 }
@@ -739,7 +767,7 @@ function buildVerbTable(entry) {
 
     if (entry.mood === 'non_finite') {
         conjugationThead.innerHTML = '<tr><th>Form</th><th>Conjugation</th></tr>';
-        const label = entry.tense === 'infinitive' ? 'Infinitivo' : entry.tense === 'gerund' ? 'Gerundio' : 'Participio';
+        const label = entry.tense === 'infinitive' ? 'Infinitif' : entry.tense === 'gerund' ? 'Participe présent' : 'Participe passé';
         conjugationTbody.innerHTML = `<tr><td class="pronoun-cell">${label}</td><td>${verb[entry.tense]}</td></tr>`;
         return;
     }
